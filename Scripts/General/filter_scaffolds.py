@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """
-filter_scaffolds.py
-
 For each flagged genome assembly, keeps only the top n scaffolds by length
 (chromosome number n), discarding unplaced scaffolds and Y chromosomes.
 
@@ -9,7 +7,6 @@ Output files are written alongside the originals with a .filtered.fna suffix,
 unless an output directory is specified with --outdir.
 
 Usage:
-    python filter_scaffolds.py --indir /path/to/fastas
     python filter_scaffolds.py --indir /path/to/fastas --outdir /path/to/output
     python filter_scaffolds.py --indir /path/to/fastas --dry-run
 """
@@ -56,7 +53,6 @@ TO_FILTER = {
     "Tetropium_fuscum_GCA_964058775.1_genomic":           12,
     "Phaedon_cochleariae_GCA_918026855.4_genomic":        17,
     "Psylliodes_chrysocephalus_GCA_927349885.1_genomic":  23,  # fallback spelling
-    # Bruchidius siliquastri — already cleaned manually, included for completeness
     "Bruchidius_siliquastri_GCA_949316355.1_genomic":     10,
 }
 

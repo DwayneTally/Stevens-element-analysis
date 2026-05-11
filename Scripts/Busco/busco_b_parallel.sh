@@ -7,9 +7,8 @@ module load mvapich
 module load hmmer
 module load busco
 
-# Configuration
-INPUT_DIR="beetle_outspecies"
-CORES_PER_JOB=10   # safe value based on 128 total cores
+INPUT_DIR="genomic_fna"  # directory containing .fna files from ncbi
+CORES_PER_JOB=10   
 MAX_JOBS=10        # max concurrent jobs
 
 # Function to count current background jobs

@@ -53,9 +53,9 @@ ages_IR2 <- get_node_ages(tree_IR2)
 ages_AC1 <- get_node_ages(tree_AC1)
 ages_AC2 <- get_node_ages(tree_AC2)
 
-# pattern: grep string matching relevant tip labels in Cai tree
-# Returns a one-row data.frame with ages from all four chains,
-# plus mean, min, max and convergence assessment
+#pattern: grep string matching relevant tip labels in Cai tree
+#Returns a one-row data.frame with ages from all four chains,
+#plus mean, min, max and convergence assessment
 
 get_clade_ages <- function(clade_name, pattern) {
   
@@ -141,7 +141,7 @@ write.csv(chain_df, paste0(out_prefix, "_cai_chain_ages.csv"),
 cat("\nChain ages saved to:",
     paste0(out_prefix, "_cai_chain_ages.csv"), "\n")
 
-# Clean up temp file
+#Clean up temp
 if (file.exists("temp_cai_tree.nwk")) file.remove("temp_cai_tree.nwk")
 
 chain_age_min <- function(clade) {
@@ -156,8 +156,8 @@ chain_age_max <- function(clade) {
   row$age_max
 }
 
-# Deep nodes from Cai Table 1
-# Family/superfamily nodes use ages extracted from chains above
+#Deep nodes from Cai Table 1
+#Family/superfamily nodes use ages extracted from chains above
 
 calibration_info <- data.table(
   superfamily = c(
@@ -254,7 +254,7 @@ cat("Loaded metadata for", nrow(meta), "genomes\n")
 cat("Groups in TSV:\n")
 print(sort(unique(meta$superfamily)))
 
-# --- Parse family-level metadata from Beetle_genome_families.txt ---
+#Parse family-level metadata from Beetle_genome_families.txt
 raw_lines <- readLines(families_file)
 raw_lines <- trimws(raw_lines[nchar(trimws(raw_lines)) > 0])
 
