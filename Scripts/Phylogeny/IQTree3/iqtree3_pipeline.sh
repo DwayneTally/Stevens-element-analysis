@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-ASTRAL_TREE="../../../Astral/concord.tre"
+ASTRAL_TREE="Astral/concord.tre"
 ALIGNMENT_DIR="trimmed_alignments_4_original/"
 GENE_TREES="ALL.tree"
 
@@ -10,7 +10,6 @@ BOOTSTRAPS=1000
 SCFL_REPS=100
 
 echo "Step 1: ML bootstrap + sCFL on fixed ASTRAL topology"
-date
 
 iqtree3 \
   -te "$ASTRAL_TREE" \
@@ -21,7 +20,6 @@ iqtree3 \
   -T "$THREADS"
 
 echo "Step 2: Add gene concordance factors"
-date
 
 iqtree3 \
   -te concord3_boot_scfl.cf.tree \
@@ -30,4 +28,4 @@ iqtree3 \
   -T "$THREADS"
 
 echo "Finished"
-date
+

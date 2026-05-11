@@ -1,6 +1,6 @@
 library(tidyverse)
 
-bed_dir <- "/N/project/Bracewell_fly/Dwayne/helixer_results/Genes_on_X_noNeoX/bed"
+bed_dir <- "Genes_on_X_noNeoX/bed"
 
 bed_files <- list.files(bed_dir, pattern = "\\.bed$", full.names = TRUE)
 

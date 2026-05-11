@@ -64,43 +64,22 @@ def get_fasta_headers(fasta_file):
 
 
 def get_species_specific_x_scaffolds(genome, fasta_headers, bed_x_scaffolds):
-    """
-    Return the set of scaffolds to treat as X for this genome.
-    Default: use the BED scaffolds.
-
-    Special cases:
-    1. Crioceris_asparagi_GCA_958507055.1
-       Only consider chromosome-level OY scaffolds at all.
-       X remains the BED scaffold(s), but autosomes will be limited to OY too.
-
-    2. Cryptophagus_acutangulus_GCA_963556235.1
-       BED X scaffolds are missing from FASTA.
-       Use chromosome-like OY scaffolds and infer X as whatever is left
-       after treating the first 13 OY scaffolds as autosomes.
-       This assumes 13 autosomes and 2 X chromosomes.
-    """
     fasta_header_set = set(fasta_headers)
 
     if genome == "Cryptophagus_acutangulus_GCA_963556235.1":
         oy_headers = sorted([h for h in fasta_headers if h.startswith("OY")])
-
-        # If BED X scaffolds are missing, infer X as the remaining OY scaffolds
-        # after the autosomes. Based on your observation: correct autosome number,
-        # remaining chromosome-level scaffolds should be X.
         if not (bed_x_scaffolds & fasta_header_set):
             if len(oy_headers) >= 15:
                 autosomes = set(oy_headers[:13])
                 inferred_x = set(oy_headers) - autosomes
-                print(f"INFO: {genome} BED X scaffolds not found in FASTA; inferring X as remaining OY scaffolds: {sorted(inferred_x)}")
+                print(f"INFO: {genome} BED X scaffolds not found in FASTA {sorted(inferred_x)}")
                 return inferred_x
 
     return bed_x_scaffolds
 
 
 def fasta_header_allowed(genome, header):
-    """
-    Species-specific filtering of which FASTA headers to include at all.
-    """
+    #Species-specific filtering of which FASTA headers to include at all.
     if genome == "Crioceris_asparagi_GCA_958507055.1":
         return header.startswith("OY")
     if genome == "Cryptophagus_acutangulus_GCA_963556235.1":

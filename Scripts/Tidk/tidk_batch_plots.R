@@ -6,7 +6,7 @@ suppressPackageStartupMessages({
 
 args <- commandArgs(trailingOnly = TRUE)
 
-base_dir <- if (length(args) >= 1) args[1] else "/N/scratch/dwtally/tidk_search_results"
+base_dir <- if (length(args) >= 1) args[1] else "tidk_search_results"
 window_bp <- if (length(args) >= 2) as.numeric(args[2]) else 10000
 min_contig_bp <- if (length(args) >= 3) as.numeric(args[3]) else 250000
 
@@ -59,10 +59,8 @@ for (tsv in tsv_files) {
   message("\n[info] Processing: ", genome_name)
   message("[info]   TSV: ", tsv)
 
-  # read tidk window table
+  #read tidk window table
   df <- read.table(file = tsv, sep = "\t", header = TRUE, stringsAsFactors = FALSE)
-
-  # sanity check required columns
   required <- c("id", "window", "forward_repeat_number", "reverse_repeat_number", "telomeric_repeat")
   missing <- setdiff(required, colnames(df))
   if (length(missing) > 0) {
@@ -75,7 +73,6 @@ for (tsv in tsv_files) {
       telo_repeat_total = forward_repeat_number + reverse_repeat_number
     )
 
-  # estimate contig length from max(window) * window_bp
   contig_sizes <- df %>%
     group_by(id) %>%
     summarize(
@@ -96,12 +93,11 @@ for (tsv in tsv_files) {
     # still write the augmented TSV for completeness
   }
 
-  # write augmented TSV
+  #write augmented TSV
   out_tsv <- file.path(genome_dir, paste0(genome_name, ".tidk_telomeric_repeat_windows.with_totals.tsv"))
   write.table(df2, file = out_tsv, sep = "\t", quote = FALSE, row.names = FALSE)
   message("[ok]   Wrote: ", out_tsv)
 
-  # make plots (using filtered set if available, otherwise all)
   df_plot <- if (nrow(df_filt) > 0) df_filt else df2
 
   out_forward_pdf <- file.path(genome_dir, paste0(genome_name, ".tidk_forward.faceted.pdf"))

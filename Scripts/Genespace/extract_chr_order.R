@@ -8,14 +8,14 @@ if (length(args) != 2) {
 rda_path <- args[1]
 out_arg  <- args[2]
 
-# Load the RDA
+#Load the RDA
 load(rda_path)
 
-# Pull chromosomes table
+#Pull chromosomes table
 chr_df <- srcd$sourceData$chromosomes
 out_df <- chr_df[, c("genome", "chrLab")]
 
-# If 2nd arg is a directory (or ends with /), write default filename inside it
+#If 2nd arg is a directory, write default filename inside it
 is_dir_like <- dir.exists(out_arg) || grepl("/$", out_arg)
 
 out_path <- if (is_dir_like) {

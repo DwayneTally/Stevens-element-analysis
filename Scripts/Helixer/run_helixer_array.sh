@@ -1,16 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=Helixer
-#SBATCH --output=logs/Helixer_%A_%a.out
-#SBATCH --error=logs/Helixer_%A_%a.err
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=dwtally@iu.edu
-#SBATCH --time=48:00:00
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=24
-#SBATCH --partition=gpu
-#SBATCH --mem=128G
-#SBATCH -A r00259
-
 set -euo pipefail
 
 module load helixer

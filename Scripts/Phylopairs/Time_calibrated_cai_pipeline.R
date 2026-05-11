@@ -88,7 +88,7 @@ get_clade_ages <- function(clade_name, pattern) {
   confidence <- ifelse(ir_ac_diff <= 5,  "HIGH",
                        ifelse(ir_ac_diff <= 15, "MEDIUM", "LOW"))
   
-  cat(sprintf("\n=== %s ===\n", clade_name))
+  cat(sprintf("\n%s\n", clade_name))
   cat(sprintf("  IR chain1:   %.1f Ma\n", age_IR1))
   cat(sprintf("  IR chain2:   %.1f Ma\n", age_IR2))
   cat(sprintf("  AC chain1:   %.1f Ma\n", age_AC1))
@@ -493,7 +493,7 @@ for (i in seq_len(nrow(calibration_info))) {
 
 ultra_nodes <- rbindlist(ultra_rows, fill = TRUE)
 
-cat("\n=== Estimated ages of calibrated nodes ===\n")
+cat("\nEstimated ages of calibrated nodes\n")
 cat(sprintf("%-35s  %8s  %14s  %s\n",
             "Group", "Age (Ma)", "Target range", "Status"))
 cat(strrep("-", 75), "\n")
@@ -510,27 +510,17 @@ for (i in seq_len(nrow(ultra_nodes))) {
 }
 
 fwrite(ultra_nodes, paste0(out_prefix, "_calibration_node_ages.csv"))
-cat("\n✓ Node ages saved to:",
+cat("\nNode ages saved to:",
     paste0(out_prefix, "_calibration_node_ages.csv"), "\n")
 
 tr_time_plot <- ladderize(tr_time)
 node_cols    <- seq_len(nrow(ultra_nodes)) + 1
 
-#timetree
-pdf(paste0(out_prefix, ".pdf"), width = 10, height = 14)
-plot(tr_time_plot,
-     main = "Beetle Timetree — Cai et al. 2022 calibrations",
-     cex  = 0.5, no.margin = TRUE)
-axisPhylo()
-add.scale.bar()
-dev.off()
-cat("✓ Plot saved to:", paste0(out_prefix, ".pdf"), "\n")
-
 #Annotated plot with calibration nodes marked
 pdf(paste0(out_prefix, "_ultrametric_tree_with_nodes.pdf"),
     width = 12, height = 16)
 plot(tr_time_plot, cex = 0.5, no.margin = TRUE,
-     main = "Time-Calibrated Tree — Cai et al. 2022")
+     main = "Time-Calibrated Tree")
 axisPhylo()
 add.scale.bar()
 obj <- get("last_plot.phylo", envir = .PlotPhyloEnv)
@@ -549,28 +539,9 @@ legend("topleft",
                        "-", ultra_nodes$age_max, " Ma)"),
        pch = 21, pt.bg = node_cols, pt.cex = 2, bty = "n", cex = 0.6)
 dev.off()
-cat("✓ Annotated plot saved to:",
-    paste0(out_prefix, "_ultrametric_tree_with_nodes.pdf"), "\n")
+cat("Annotated plot saved to:",
+    paste0(out_prefix, "_ultrametric_tree.pdf"), "\n")
 
-# 3. Points-only version
-pdf(paste0(out_prefix, "_ultrametric_tree_with_nodes_points_only.pdf"),
-    width = 12, height = 16)
-plot(tr_time_plot, cex = 0.5, no.margin = TRUE,
-     main = "Time-Calibrated Tree — Calibration Nodes (points only)")
-axisPhylo()
-add.scale.bar()
-obj <- get("last_plot.phylo", envir = .PlotPhyloEnv)
-points(x = obj$xx[ultra_nodes$node], y = obj$yy[ultra_nodes$node],
-       pch = 21, bg = node_cols, cex = 2)
-legend("topleft",
-       legend = paste0(ultra_nodes$superfamily,
-                       " (node ", ultra_nodes$node,
-                       ", age ", round(ultra_nodes$node_age_ma, 1), " Ma)"),
-       pch = 21, pt.bg = node_cols, pt.cex = 2, bty = "n", cex = 0.65)
-dev.off()
-cat("✓ Points-only plot saved to:",
-    paste0(out_prefix,
-           "_ultrametric_tree_with_nodes_points_only.pdf"), "\n")
 
 cat("Output files:\n")
 cat(" ", paste0(out_prefix, "_cai_chain_ages.csv"),
@@ -581,9 +552,5 @@ cat(" ", paste0(out_prefix, "_calibration_node_ages.csv"),
     "  — final node age estimates\n")
 cat(" ", paste0(out_prefix, ".newick"),
     "  — ultrametric timetree\n")
-cat(" ", paste0(out_prefix, ".pdf"),
-    "  — timetree plot\n")
 cat(" ", paste0(out_prefix, "_ultrametric_tree_with_nodes.pdf"),
     "  — annotated plot\n")
-cat(" ", paste0(out_prefix, "_ultrametric_tree_with_nodes_points_only.pdf"),
-    "  — points-only plot\n")

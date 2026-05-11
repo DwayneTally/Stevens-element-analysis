@@ -1,8 +1,8 @@
 library(tidyverse)
 
 # Directories
-x_dir <- "/N/project/Bracewell_fly/Dwayne/helixer_results/Genes_on_X_noNeoX/bed"
-neo_dir <- "/N/project/Bracewell_fly/Dwayne/helixer_results/Genes_on_neoX/bed"
+x_dir <- "Genes_on_X_noNeoX/bed"
+neo_dir <- "Genes_on_neoX/bed"
 
 count_genes <- function(bed_dir, label) {
 
@@ -35,16 +35,15 @@ count_genes <- function(bed_dir, label) {
   return(df)
 }
 
-# Count genes in both datasets
+#Count genes in both datasets
 x_counts <- count_genes(x_dir, "Ancestral X")
 neo_counts <- count_genes(neo_dir, "neoX")
 
-# Combine
 gene_counts <- bind_rows(x_counts, neo_counts)
 
 print(gene_counts)
 
-# Plot
+#Plot
 gene_counts$group <- factor(gene_counts$group, levels = c("Ancestral X", "neoX"))
 gene_counts$xpos <- ifelse(gene_counts$group == "Ancestral X", 1, 1.6)
 

@@ -4,7 +4,8 @@ import os
 import shutil
 import argparse
 import pandas as pd
-
+#Uses chromosome number extracted from NCBI to filter FASTA files to keep only the top n scaffolds by length,
+#where n is the chromosome number. This is based on table S1.
 
 def parse_fasta(path):
     with open(path, "r") as fh:
@@ -104,7 +105,7 @@ def main():
             missing += 1
             continue
 
-        # Prefer files that are already cleaned/filtered
+        #Prefer files that are already cleaned/filtered
         clean_matches = [
             f for f in matches
             if "_clean" in f or "filtered" in f
@@ -153,7 +154,6 @@ def main():
     print(f"Copied clean/filtered genomes: {copied}")
     print(f"Skipped already in outdir: {skipped_existing}")
     print(f"Missing FASTA: {missing}")
-    print(f"No chromosome count: {no_chrom}")
     print(f"Missing log written to: {args.missing_log}")
 
 

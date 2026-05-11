@@ -8,7 +8,6 @@ suppressPackageStartupMessages({
   library(data.table)
 })
 
-# === User parameters ===
 genespace_dir      <- "rerun_coccinelloidea_tricast"
 gsparams_file      <- file.path(genespace_dir, "results", "gsParams.rda")
 output_plot        <- file.path(genespace_dir, "Coccinelloidea_custom_order_stevens_tricast.pdf")
@@ -39,12 +38,12 @@ genome_order <- c(
 )
 
 if (!file.exists(gsparams_file)) stop(paste("❌ Cannot find gsParams.rda at", gsparams_file))
-cat("✅ Loading gsParams from:", gsparams_file, "\n")
+cat("Loading gsParams from:", gsparams_file, "\n")
 load(gsparams_file, verbose = FALSE)
 
 missing_genomes <- setdiff(genome_order, gsParam$genomeIDs)
 if (length(missing_genomes) > 0) {
-  stop(paste0("❌ The following genomes are missing from gsParams:\n", paste(missing_genomes, collapse = "\n")))
+  stop(paste0("The following genomes are missing from gsParams:\n", paste(missing_genomes, collapse = "\n")))
 }
 
 #custom chromosome labels

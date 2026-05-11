@@ -1,7 +1,7 @@
 library(tidyverse)
 library(broom)
 
-df <- read_csv("75_repeat_summary.csv")
+df <- read_csv("71_repeat_summary.csv")
 
 df_long <- df %>%
   pivot_longer(

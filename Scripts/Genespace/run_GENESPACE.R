@@ -1,8 +1,7 @@
 library(GENESPACE)
 library(ggplot2)
-# Directories
-wd <- "/N/project/Bracewell_fly/Dwayne/helixer_results/Genes_on_neoX"
-path2mcscanx <- "/N/slate/dwtally/MCScanX"
+wd <- "genespace_run"
+path2mcscanx <- "~/MCScanX"
 
 # Initialize run
 gpar <- init_genespace(
@@ -10,10 +9,9 @@ gpar <- init_genespace(
   path2mcscanx = path2mcscanx
 )
 
-# Execute run
 out <- run_genespace(gpar)
 
-# Save session info
+#Save session info
 writeLines(capture.output(sessionInfo()), file.path(wd, "sessionInfo.txt"))
-cat("✅ GENESPACE run complete.\n")
+cat("GENESPACE run complete.\n")
 

@@ -6,9 +6,7 @@ import csv
 import sys
 
 def parse_short_summary(path):
-    """
-    Parse a BUSCO short_summary*.txt file and return a dict with key metrics.
-    """
+    #Parse BUSCO short_summary*.txt file and return a dict with key metrics.
     lineage = None
     mode = None
     busco_version = None
@@ -30,8 +28,8 @@ def parse_short_summary(path):
     if stats_line is None:
         raise ValueError(f"No 'C:' stats line found in {path}")
 
-    # Example stats line:
-    # C:98.7%[S:97.5%,D:1.2%],F:0.5%,M:0.8%,n:1367
+    #Example:
+    #C:98.7%[S:97.5%,D:1.2%],F:0.5%,M:0.8%,n:1367
     pattern = re.compile(
         r"C:(?P<C>[\d.]+)%\[S:(?P<S>[\d.]+)%,D:(?P<D>[\d.]+)%\],"
         r"F:(?P<F>[\d.]+)%,M:(?P<M>[\d.]+)%,n:(?P<n>\d+)"
@@ -54,8 +52,6 @@ def parse_short_summary(path):
 
 def parse_ids_from_busco_dir(busco_dir_name):
     """
-    From something like:
-      busco_Abax_parallelepipedus_GCA_964197645.1_genomic
     return:
       genome_id = Abax_parallelepipedus_GCA_964197645.1_genomic
       species   = "Abax parallelepipedus"
@@ -65,7 +61,6 @@ def parse_ids_from_busco_dir(busco_dir_name):
     if genome_id.startswith("busco_"):
         genome_id = genome_id[len("busco_"):]
 
-    # Try to pull out GCA/GCF accession
     m = re.search(r"(GC[AF]_\d+\.\d+)", genome_id)
     accession = m.group(1) if m else ""
 
@@ -84,7 +79,6 @@ def parse_ids_from_busco_dir(busco_dir_name):
     return genome_id, species, accession
 
 def main(root_dir, outfile):
-    # Find top-level short_summary.specific.*.txt in each busco_* directory
     pattern = os.path.join(root_dir, "busco_*", "short_summary.specific.*.txt")
     paths = sorted(glob.glob(pattern))
 

@@ -4,11 +4,11 @@ import subprocess
 from pathlib import Path
 
 # === PATH SETUP ===
-gffread_bin = Path("/N/project/Bracewell_beetle/SOFTWARE/gffread/gffread/gffread")
-gff_dir = Path("Gabby_genomes")
-genome_dir = Path("Gabby_genomes")  # location of unmasked .fna files
-pep_output_dir = Path("Gabby_peptide")
-cds_output_dir = Path("Gabby_cds")
+gffread_bin = Path("gffread")
+gff_dir = Path("genomes")
+genome_dir = Path("genomes")  # location of unmasked .fna files
+pep_output_dir = Path("peptide")
+cds_output_dir = Path("cds")
 
 # === CREATE OUTPUT DIRS ===
 pep_output_dir.mkdir(exist_ok=True)
@@ -21,7 +21,7 @@ for gff_file in gff_dir.glob("*.gff"):
     # Point to the unmasked genome file
     genome_path = genome_dir / f"{base}_genomic.fna"
     if not genome_path.exists():
-        print(f"⚠️  Skipping {base} — genome not found at {genome_path}")
+        print(f"Skipping {base} — genome not found at {genome_path}")
         continue
 
     # Output file paths
@@ -37,10 +37,10 @@ for gff_file in gff_dir.glob("*.gff"):
         "-y", str(pep_out)
     ]
 
-    print(f"🔁 Running gffread for {base}")
+    print(f"Running gffread for {base}")
     try:
         subprocess.run(cmd, check=True)
-        print(f"✅ Done: {base}")
+        print(f"Done: {base}")
     except subprocess.CalledProcessError:
-        print(f"❌ Failed: {base}")
+        print(f"Failed: {base}")
 

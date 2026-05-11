@@ -9,13 +9,13 @@ suppressPackageStartupMessages({
 
 df <- read_csv("genome_stats_by_species.csv", show_col_types = FALSE)
 
-# Normalize Tenebrionidea naming
+#Normalize Tenebrionidea (inconsistent naming)
 df$group <- recode(df$group,
   "Tenebrionidea" = "Tenebrionoidea",
   "Tenebrionidae" = "Tenebrionoidea"
 )
 
-# Explicit color palette (superfamily -> color) IN DESIRED ORDER
+#Explicit color palette (superfamily -> color) 
 sf_colors <- c(
   "Caraboidea"      = "#d5a6bd",
   "Buprestoidea"    = "#783f04",
@@ -30,19 +30,18 @@ sf_colors <- c(
   "Chrysomeloidea"  = "#b6d7a8"
 )
 
-# Keep only groups with >= 2 species
+#Keep only groups with >= 2 species
 df2 <- df %>%
   group_by(group) %>%
   filter(n() >= 2) %>%
   ungroup()
 
-# Drop any groups not in the color map (safety)
 df2 <- df2 %>% filter(group %in% names(sf_colors))
 
-# Force x-axis order to match sf_colors order
+#x-axis order match sf_colors order
 df2$group <- factor(df2$group, levels = names(sf_colors))
 
-# Long format for plotting (factor levels carry through)
+#plotting
 long <- df2 %>%
   select(group, species_file, chromosomes, genome_size_mb, gc_percent, genes) %>%
   pivot_longer(

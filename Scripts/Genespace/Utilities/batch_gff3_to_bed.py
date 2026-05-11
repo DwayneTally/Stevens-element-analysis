@@ -28,9 +28,9 @@ def parse_gff3_to_bed(gff3_path, pep_ids, output_bed):
                 bed.write(f"{chrom}\t{int(start)-1}\t{end}\t{transcript_id}\n")
 
 def main():
-    gff_dir = Path("Gabby_genomes")
-    pep_dir = Path("Gabby_peptide")
-    output_dir = Path("Gabby_bed")
+    gff_dir = Path("genomes")
+    pep_dir = Path("peptide")
+    output_dir = Path("bed")
     output_dir.mkdir(parents=True, exist_ok=True)
 
     gff_files = sorted(gff_dir.glob("*.gff"))
@@ -41,12 +41,12 @@ def main():
         bed_file = output_dir / f"{base}.bed"
 
         if not pep_file.exists():
-            print(f"⚠️  Skipping {base} — peptide file not found.")
+            print(f"Skipping {base} — peptide file not found.")
             continue
 
         pep_ids = extract_pep_ids(pep_file)
         parse_gff3_to_bed(gff_file, pep_ids, bed_file)
-        print(f"✅ Wrote: {bed_file}")
+        print(f"Wrote: {bed_file}")
 
 if __name__ == "__main__":
     main()

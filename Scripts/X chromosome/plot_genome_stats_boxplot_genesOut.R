@@ -43,7 +43,6 @@ df2 <- df2 %>% filter(group %in% names(sf_colors))
 # Force x-axis order to match sf_colors order
 df2$group <- factor(df2$group, levels = names(sf_colors))
 
-# Long format
 long <- df2 %>%
   select(group, species_file, chromosomes, genome_size_mb, gc_percent, genes) %>%
   pivot_longer(
@@ -59,7 +58,7 @@ metric_labs <- c(
   genes          = "Genes"
 )
 
-# Identify outliers within each superfamily and metric
+#Identify outliers within each superfamily and metric
 long_outliers <- long %>%
   group_by(group, metric) %>%
   mutate(
@@ -72,7 +71,7 @@ long_outliers <- long %>%
   ) %>%
   ungroup()
 
-# Save outlier table
+#Save outlier table
 outlier_table <- long_outliers %>%
   filter(is_outlier) %>%
   select(group, species_file, metric, value, lower, upper) %>%

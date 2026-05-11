@@ -7,20 +7,19 @@ suppressPackageStartupMessages({
 })
 
 infile <- "genome_stats_by_species.csv"
-outfile_wide <- "genome_stats_summary_by_superfamily_wide.csv"
-outfile_long <- "genome_stats_summary_by_superfamily_long.csv"
+outfile <- "genome_stats_summary_by_superfamily.csv"
 
 df <- read_csv(infile, show_col_types = FALSE)
 
-# Ensure expected columns exist
+#Double check columns exist
 needed <- c("group", "chromosomes", "genome_size_mb", "gc_percent", "genes")
 missing <- setdiff(needed, names(df))
 if (length(missing) > 0) {
   stop(paste("Missing required columns in CSV:", paste(missing, collapse = ", ")))
 }
 
-# Long format: one row per (group, metric, value)
-long <- df %>%
+#one row per (group, metric, value)
+summ <- df %>%
   select(group, chromosomes, genome_size_mb, gc_percent, genes) %>%
   pivot_longer(
     cols = c(chromosomes, genome_size_mb, gc_percent, genes),
@@ -28,8 +27,8 @@ long <- df %>%
     values_to = "value"
   )
 
-# Summary stats per group/metric
-summary_long <- long %>%
+#Summary stats per group
+summary_init <- summ %>%
   group_by(group, metric) %>%
   summarise(
     n = sum(!is.na(value)),
@@ -43,8 +42,8 @@ summary_long <- long %>%
   ) %>%
   arrange(metric, group)
 
-# Wide version (columns like mean_genome_size_mb, median_genes, etc.)
-summary_wide <- summary_long %>%
+#columns like mean_genome_size_mb, median_genes, etc.
+summary <- summary_init %>%
   pivot_wider(
     id_cols = group,
     names_from = metric,
@@ -53,13 +52,9 @@ summary_wide <- summary_long %>%
   ) %>%
   arrange(group)
 
-# Write outputs
-write_csv(summary_long, outfile_long)
-write_csv(summary_wide, outfile_wide)
+#Write outputs
+write_csv(summary, outfile)
 
-# Print a readable preview to stdout (nice for logs)
 print(summary_long, n = 200)
-
-message("Wrote: ", outfile_long)
-message("Wrote: ", outfile_wide)
+message("Wrote: ", outfile)
 

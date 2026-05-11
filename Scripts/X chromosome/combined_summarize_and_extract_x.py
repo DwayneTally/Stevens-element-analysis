@@ -50,7 +50,7 @@ def main():
         description="Run summarize_x_genes and then subset GENESPACE bed/peptide files to inferred X chromosomes"
     )
 
-    # ---- summarize_x_genes.py arguments ----
+    #summarize_x_genes.py arguments
     parser.add_argument("--bed", required=True)
     parser.add_argument("--pangenes", required=True)
     parser.add_argument("--x-chr", default="NC_007416.3")
@@ -58,17 +58,13 @@ def main():
     parser.add_argument("--exclude-genomes", default=None)
     parser.add_argument("--out-prefix", default="tribolium_X")
 
-    # ---- genespace_extract_x.py arguments ----
+    #genespace_extract_x.py arguments
     parser.add_argument("--genespace-root", required=True, help="GENESPACE run directory containing bed/ and peptide/")
     parser.add_argument("--outdir", required=True, help="Output directory")
     parser.add_argument("--genome-col", default="genome", help="Genome column in summary CSV")
     parser.add_argument("--x-col", default="x_chromosome", help="X chromosome column in summary CSV")
 
     args = parser.parse_args()
-
-    # ============================================================
-    # Part 1: summarize_x_genes.py
-    # ============================================================
 
     split_genomes = read_list_file(args.split_genomes)
     exclude_genomes = read_list_file(args.exclude_genomes)
@@ -176,10 +172,6 @@ def main():
 
     print("\nOutput:")
     print(summary.to_string(index=False))
-
-    # ============================================================
-    # Part 2: genespace_extract_x.py
-    # ============================================================
 
     root = Path(args.genespace_root)
     bed_dir = root / "bed"
