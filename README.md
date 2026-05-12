@@ -93,7 +93,7 @@ Will have Helixer annotations, BUSCO output: full_table, Earl Grey annotations, 
 - earlGrey
 - tidK
 - GENESPACE
-- IQ-TREE and ASTRAL
+- Busco_phylogeneics, IQ-TREE and ASTRAL
 - SLURM or another HPC scheduler for batch execution
 - conda or module support for environment management
 
