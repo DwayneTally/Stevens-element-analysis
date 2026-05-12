@@ -40,7 +40,7 @@ Some large input data and runtime outputs are not part of this repository:
 
 ## Figshare repository
 Figshare: https://figshare.com/projects/Datasets_for_Species-rich_and_genomically_diverse_comparative_genomics_reveal_how_fusions_fissions_and_sex_chromosomes_have_shaped_beetle_evolution_/274777
-Will have Helixer annotations, BUSCO output: full_table, Earl Grey annotations, and Genespace Bed, Peptide, and orthofinder directories.
+Will have Helixer annotations, BUSCO full_table outputs, Earl Grey annotations, and Genespace and orthofinder directories.
 
 ## Recommended workflow
 
