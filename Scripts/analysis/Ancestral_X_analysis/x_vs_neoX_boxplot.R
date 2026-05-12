@@ -1,7 +1,7 @@
 library(tidyverse)
 
 # Directories
-x_dir <- "Genes_on_X_noNeoX/bed"
+x_dir <- "Genes_on_AncestralX/bed"
 neo_dir <- "Genes_on_neoX/bed"
 
 count_genes <- function(bed_dir, label) {
@@ -72,10 +72,11 @@ p <- ggplot(gene_counts, aes(x = xpos, y = x_genes, group = group)) +
   labs(
     x = "",
     y = "Number of genes",
-    title = "Contrast X and Neo-X genes"
+    title = ""
   ) +
 
   theme_classic(base_size = 14)
 
 ggsave("X_vs_neoX_gene_counts_boxplot.pdf", p, width = 6, height = 6)
-ggsave("X_vs_neoX_gene_counts_boxplot.png", p, width = 6, height = 6, dpi = 300)
+
+

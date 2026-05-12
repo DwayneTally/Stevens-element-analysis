@@ -1,0 +1,38 @@
+# Ignore runtime and generated files
+*.log
+*.out
+*.err
+*.tmp
+*.bak
+*.swp
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# R and RStudio files
+*.Rhistory
+*.RData
+.Rproj.user/
+
+# Common archive and temporary data files
+*.zip
+*.tar.gz
+*.tgz
+*.gz
+
+# Local genome extraction / analysis outputs
+genomic_fna/
+busco_*/
+earlgrey_runs/
+*_results/
+*_output/
+
+# VS Code settings
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db

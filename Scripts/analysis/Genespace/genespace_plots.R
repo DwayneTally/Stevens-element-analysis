@@ -8,9 +8,9 @@ suppressPackageStartupMessages({
   library(data.table)
 })
 
-genespace_dir      <- "rerun_coccinelloidea_tricast"
+genespace_dir      <- "Genespace_run_Coccinelloidea_Tcast"
 gsparams_file      <- file.path(genespace_dir, "results", "gsParams.rda")
-output_plot        <- file.path(genespace_dir, "Coccinelloidea_custom_order_stevens_tricast.pdf")
+output_plot        <- file.path(genespace_dir, "Coccinelloidea_custom_order.pdf")
 custom_labels_file <- file.path(genespace_dir, "Coccinelloidea_output.csv")
 chr_order_csv      <- file.path(genespace_dir, "riparian", "Tribolium_order.csv")
 
