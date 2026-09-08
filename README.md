@@ -74,6 +74,11 @@ Will have Helixer annotations, BUSCO full_table outputs, Earl Grey annotations, 
 2. Run `Scripts/analysis/Ancestral_X_analysis/combined_summarize_and_extract_x.py` to extract BED and peptide files associated to the X and neo-X chromosome. And store the results into Ancestral X and Neo-X respective directories
 3. Run GENESPACE on the two new directories
 4. Run any other analysis scripts, both boxplots only need the BED files, while the `scan_conserved_thresholds.R` requires orthofinder from GENESPACE to be ran. You would then need to point the script to Genespace_run/orthofinder/results/Orthogroups/Orthogroups.GeneCount.tsv.
+5. Also included x vs autosomesome analysis.
+  1. Need to run gene_movement_busco_v2.py on the species that you are interested in. Need bed and fasta files to complete analysis 
+  2. run make_genespace_by_element.py, this will create new genespace directories based on 6 stevens elements (A,C,E,G,H,X) where the directories contents are based on which chromosome of the species map to which elements
+  3. run_all_elements.sh, Wrapper to run run_genespace_element.R
+  4. run scan_all_stevens_elements.R, similar to scan_conserved_thresholds.R give it the parent directory that has all the element genespace analysis, threshold you want to look at, and the prefix for the results.
 
 # Tandem Elements (TE) repeats
 1. Run `Scripts/annotation/run_earlgrey.sh` with earlgrey_genomes.txt where you give it a path to your genomic fna files.
